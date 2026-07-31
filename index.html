@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synth Solutions | Sites que vendem por você</title>
+<meta name="description" content="Landing pages e sites de agendamento que transformam visitantes em clientes. Entrega rápida, resultado real.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #060d0b;
+    --bg-alt: #0a1613;
+    --surface: #0f1e1a;
+    --surface-2: #143128;
+    --line: rgba(143, 240, 222, 0.14);
+    --teal: #3fd9c4;
+    --teal-light: #8ff0de;
+    --silver: #e7ecea;
+    --silver-dim: #9bb0ac;
+    --white: #f5fbfa;
+    --grad: linear-gradient(135deg, #e7ecea 0%, #3fd9c4 55%, #1f8f7e 100%);
+    --shadow: 0 20px 60px rgba(0,0,0,0.45);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Public Sans', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.02em; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  ::selection { background: var(--teal); color: var(--bg); }
+
+  :focus-visible{
+    outline: 2px solid var(--teal-light);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .wrap{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .eyebrow{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before{
+    content: '';
+    width: 18px;
+    height: 1px;
+    background: var(--teal-light);
+    display: inline-block;
+  }
+
+  /* ---------- background thread signature ---------- */
+  .thread-svg{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.55;
+  }
+  .thread-path{
+    fill: none;
+    stroke: url(#threadGrad);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-dasharray: 12 10;
+    animation: dash-flow 40s linear infinite;
+  }
+  @keyframes dash-flow{
+    to { stroke-dashoffset: -2000; }
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(14px);
+    background: rgba(6, 13, 11, 0.72);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+  }
+  .brand{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+  }
+  .brand-mark{
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+  }
+  .brand small{
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: var(--silver-dim);
+    text-transform: uppercase;
+  }
+  nav.links{
+    display: flex;
+    gap: 32px;
+    font-size: 14.5px;
+    color: var(--silver-dim);
+  }
+  nav.links a:hover{ color: var(--teal-light); }
+  .cta-btn{
+    background: var(--grad);
+    color: #06120f;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 11px 22px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform .25s ease, box-shadow .25s ease;
+    box-shadow: 0 8px 24px rgba(63, 217, 196, 0.25);
+  }
+  .cta-btn:hover{ transform: translateY(-2px); box-shadow: 0 12px 30px rgba(63, 217, 196, 0.4); }
+  .cta-ghost{
+    border: 1px solid var(--line);
+    color: var(--silver);
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 14px;
+  }
+  .cta-ghost:hover{ border-color: var(--teal); color: var(--teal-light); }
+
+  .menu-toggle{ display: none; background: none; border: none; color: var(--white); font-size: 24px; cursor: pointer; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position: relative;
+    padding: 110px 0 90px;
+    z-index: 1;
+  }
+  .hero-grid{
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .hero h1{
+    font-size: clamp(34px, 5.2vw, 58px);
+    line-height: 1.06;
+    margin: 18px 0 22px;
+  }
+  .hero h1 .grad-text{
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero p.lead{
+    font-size: 17.5px;
+    color: var(--silver-dim);
+    max-width: 480px;
+    margin-bottom: 34px;
+  }
+  .hero-actions{ display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-stats{
+    display: flex;
+    gap: 32px;
+    margin-top: 46px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+  .hero-stats div strong{
+    display: block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 26px;
+    color: var(--teal-light);
+  }
+  .hero-stats div span{
+    font-size: 12.5px;
+    color: var(--silver-dim);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .hero-visual{
+    position: relative;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-visual .ring{
+    position: absolute;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+  }
+  .hero-visual .ring.r1{ inset: 0; }
+  .hero-visual .ring.r2{ inset: 14%; border-style: dashed; opacity: .5; }
+  .hero-mark{
+    width: 46%;
+    filter: drop-shadow(0 20px 50px rgba(63,217,196,0.28));
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-14px); }
+  }
+
+  /* ---------- section shell ---------- */
+  section{ position: relative; z-index: 1; padding: 88px 0; }
+  .section-head{ max-width: 620px; margin-bottom: 52px; }
+  .section-head h2{ font-size: clamp(28px, 3.6vw, 40px); margin-top: 14px; }
+  .section-head p{ color: var(--silver-dim); font-size: 16px; margin-top: 14px; }
+
+  /* ---------- problems ---------- */
+  .problems{ background: linear-gradient(180deg, transparent, var(--bg-alt) 20%, var(--bg-alt) 80%, transparent); }
+  .problem-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .problem-card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 30px 26px;
+    transition: transform .3s ease, border-color .3s ease;
+  }
+  .problem-card:hover{ transform: translateY(-6px); border-color: var(--teal); }
+  .problem-card .num{
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--teal);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+  }
+  .problem-card h3{ font-size: 19px; margin: 14px 0 10px; }
+  .problem-card p{ color: var(--silver-dim); font-size: 14.5px; }
+
+  /* ---------- process ---------- */
+  .process-list{
+    display: grid;
+    gap: 0;
+  }
+  .process-item{
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 24px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .process-item:first-child{ border-top: 1px solid var(--line); }
+  .step-num{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    color: var(--teal-light);
+    padding-top: 3px;
+  }
+  .process-item h3{ font-size: 19px; margin-bottom: 6px; }
+  .process-item p{ color: var(--silver-dim); font-size: 15px; max-width: 620px; }
+
+  /* ---------- pricing ---------- */
+  .pricing-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: stretch;
+  }
+  .plan{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 34px 28px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .plan.featured{
+    border-color: var(--teal);
+    background: linear-gradient(180deg, rgba(63,217,196,0.09), var(--surface) 40%);
+    box-shadow: var(--shadow);
+  }
+  .plan.featured::before{
+    content: 'MAIS ESCOLHIDO';
+    position: absolute;
+    top: -13px;
+    left: 28px;
+    background: var(--grad);
+    color: #06120f;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .plan .plan-name{ font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.1em; color: var(--silver-dim); text-transform: uppercase; }
+  .plan .plan-price{ font-family: 'Space Grotesk', sans-serif; font-size: 42px; margin: 12px 0 4px; }
+  .plan .plan-price sup{ font-size: 18px; color: var(--teal-light); }
+  .plan .plan-tag{ font-size: 13.5px; color: var(--silver-dim); margin-bottom: 22px; }
+  .plan ul{ list-style: none; display: grid; gap: 12px; margin-bottom: 28px; flex-grow: 1; }
+  .plan ul li{
+    font-size: 14.5px;
+    color: var(--silver);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .plan ul li::before{
+    content: '✓';
+    color: var(--teal);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .plan .plan-cta{
+    text-align: center;
+    padding: 13px;
+    border-radius: 12px;
+    border: 1px solid var(--teal);
+    color: var(--teal-light);
+    font-weight: 600;
+    font-size: 14.5px;
+  }
+  .plan.featured .plan-cta{
+    background: var(--grad);
+    color: #06120f;
+    border: none;
+  }
+  .plan .plan-cta:hover{ opacity: .85; }
+
+  .extras{
+    margin-top: 40px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 26px 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .extras .extra-item h4{ font-size: 15px; margin-bottom: 4px; }
+  .extras .extra-item span{ color: var(--teal-light); font-family: 'JetBrains Mono', monospace; font-size: 13.5px; }
+  .extras .extra-item p{ color: var(--silver-dim); font-size: 13px; margin-top: 4px; }
+
+  /* ---------- portfolio / social proof ---------- */
+  .social{
+    background: var(--bg-alt);
+  }
+  .social-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .ig-card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 26px;
+  }
+  .ig-head{ display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .ig-head img{ width: 42px; height: 42px; border-radius: 50%; }
+  .ig-head strong{ font-size: 14.5px; }
+  .ig-head span{ display: block; font-size: 12.5px; color: var(--silver-dim); }
+  .ig-stats{ display: flex; gap: 24px; margin-top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--silver-dim); }
+  .ig-stats strong{ color: var(--white); display: block; font-family: 'Space Grotesk', sans-serif; font-size: 18px; }
+
+  /* ---------- final cta ---------- */
+  .final-cta{
+    text-align: center;
+    padding: 100px 0 120px;
+  }
+  .final-cta h2{ font-size: clamp(30px, 5vw, 50px); max-width: 720px; margin: 0 auto 20px; }
+  .final-cta p{ color: var(--silver-dim); max-width: 480px; margin: 0 auto 34px; }
+
+  footer{
+    border-top: 1px solid var(--line);
+    padding: 40px 0;
+    position: relative;
+    z-index: 1;
+  }
+  .foot-grid{ display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+  .foot-brand{ display: flex; align-items: center; gap: 10px; font-family: 'Space Grotesk', sans-serif; font-weight: 600; }
+  .foot-brand img{ width: 28px; height: 28px; }
+  .foot-links{ display: flex; gap: 22px; font-size: 13.5px; color: var(--silver-dim); }
+  .foot-links a:hover{ color: var(--teal-light); }
+
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .hero-visual{ max-width: 280px; margin: 0 auto; }
+    .problem-grid{ grid-template-columns: 1fr; }
+    .pricing-grid{ grid-template-columns: 1fr; }
+    .social-grid{ grid-template-columns: 1fr; }
+    .extras{ grid-template-columns: 1fr; }
+    nav.links{ display: none; }
+    .menu-toggle{ display: block; }
+    .cta-ghost{ display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<svg class="thread-svg" viewBox="0 0 1200 2400" preserveAspectRatio="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="threadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e7ecea"/>
+      <stop offset="55%" stop-color="#3fd9c4"/>
+      <stop offset="100%" stop-color="#1f8f7e"/>
+    </linearGradient>
+  </defs>
+  <path class="thread-path" d="M -100 120 C 300 220, 250 420, 650 480 S 1100 700, 700 900 S 200 1150, 600 1350 S 1150 1600, 750 1850 S 150 2100, 550 2350" />
+</svg>
+
+<header>
+  <div class="nav wrap">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 100 100" role="img" aria-label="Synth Solutions logomark">
+        <defs>
+          <linearGradient id="markGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#e7ecea"/>
+            <stop offset="55%" stop-color="#3fd9c4"/>
+            <stop offset="100%" stop-color="#1f8f7e"/>
+          </linearGradient>
+        </defs>
+        <path d="M32 22c-10 0-16 6-16 13 0 18 30 10 30 24 0 6-6 10-14 10-8 0-15-4-17-11" fill="none" stroke="url(#markGrad)" stroke-width="7" stroke-linecap="round"/>
+        <path d="M46 22 L66 50 L86 22 M66 50 L66 82" fill="none" stroke="url(#markGrad)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        Synth Solutions
+        <small>Sites que vendem por você</small>
+      </div>
+    </div>
+    <nav class="links">
+      <a href="#problemas">Por que um site</a>
+      <a href="#processo">Como funciona</a>
+      <a href="#planos">Planos</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <div style="display:flex; gap:12px; align-items:center;">
+      <a href="https://instagram.com/synthsolutionshub" class="cta-ghost" target="_blank" rel="noopener">@synthsolutionshub</a>
+      <a href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Vi%20o%20site%20da%20Synth%20Solutions%20e%20quero%20um%20or%C3%A7amento" class="cta-btn" target="_blank" rel="noopener">Pedir orçamento</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Landing pages &amp; agendamento</span>
+        <h1>Seu negócio local merece um site que <span class="grad-text">vende sozinho</span>.</h1>
+        <p class="lead">Criamos landing pages e sites de agendamento rápidos, bonitos e feitos para converter visitante em cliente — sem dor de cabeça e sem esperar semanas.</p>
+        <div class="hero-actions">
+          <a href="#planos" class="cta-btn">Ver planos e preços</a>
+          <a href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Quero%20um%20or%C3%A7amento%20de%20site" class="cta-ghost" target="_blank" rel="noopener">Falar no WhatsApp</a>
+        </div>
+        <div class="hero-stats">
+          <div><strong>2–5 dias</strong><span>ENTREGA MÉDIA</span></div>
+          <div><strong>100%</strong><span>RESPONSIVO</span></div>
+          <div><strong>R$89,99</strong><span>A PARTIR DE</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <svg class="hero-mark" viewBox="0 0 100 100" role="img" aria-label="Synth Solutions logomark grande">
+          <path d="M32 22c-10 0-16 6-16 13 0 18 30 10 30 24 0 6-6 10-14 10-8 0-15-4-17-11" fill="none" stroke="url(#markGrad)" stroke-width="6" stroke-linecap="round"/>
+          <path d="M46 22 L66 50 L86 22 M66 50 L66 82" fill="none" stroke="url(#markGrad)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEMAS -->
+  <section class="problems" id="problemas">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Por que isso importa</span>
+        <h2>3 erros que afastam clientes do seu site</h2>
+        <p>A maioria dos negócios locais perde vendas não por falta de qualidade — mas por detalhes simples que espantam quem chega até a página.</p>
+      </div>
+      <div class="problem-grid">
+        <div class="problem-card">
+          <span class="num mono">01</span>
+          <h3>Site que demora pra carregar</h3>
+          <p>Cada segundo de espera derruba a chance do visitante ficar. Construímos páginas leves, feitas para abrir rápido em qualquer celular.</p>
+        </div>
+        <div class="problem-card">
+          <span class="num mono">02</span>
+          <h3>Sem caminho claro pra comprar</h3>
+          <p>Se o botão de contato está escondido, a venda não acontece. Todo projeto sai com WhatsApp, agendamento ou pagamento em destaque.</p>
+        </div>
+        <div class="problem-card">
+          <span class="num mono">03</span>
+          <h3>Visual genérico, sem confiança</h3>
+          <p>Um site com cara de modelo pronto passa insegurança. Ajustamos cores, fotos e textos pra combinar com a identidade do seu negócio.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESSO -->
+  <section id="processo">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Como funciona</span>
+        <h2>Do pedido ao site publicado</h2>
+        <p>Um processo simples, pensado pra quem nunca criou um site — você só participa das decisões, a gente cuida da parte técnica.</p>
+      </div>
+      <div class="process-list">
+        <div class="process-item">
+          <span class="step-num mono">01</span>
+          <div><h3>Você envia as informações</h3><p>Nome do negócio, o que você vende, cores, textos e fotos que tiver disponíveis.</p></div>
+        </div>
+        <div class="process-item">
+          <span class="step-num mono">02</span>
+          <div><h3>Montagem da página</h3><p>Criamos a landing page ou site de agendamento com base no plano escolhido.</p></div>
+        </div>
+        <div class="process-item">
+          <span class="step-num mono">03</span>
+          <div><h3>Revisão junto com você</h3><p>Ajustamos textos, cores e imagens até o resultado ficar do jeito que você imaginou.</p></div>
+        </div>
+        <div class="process-item">
+          <span class="step-num mono">04</span>
+          <div><h3>Publicação e entrega</h3><p>O site vai ao ar e você recebe o link pronto pra compartilhar com seus clientes.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANOS -->
+  <section id="planos">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Investimento</span>
+        <h2>Planos claros, sem letra miúda</h2>
+        <p>Escolha o nível de site que faz sentido pro momento do seu negócio. Todos os planos incluem design responsivo para celular e computador.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="plan">
+          <span class="plan-name mono">Básico</span>
+          <div class="plan-price">R$89<sup>,99</sup></div>
+          <div class="plan-tag">Ideal pra sair do zero rápido</div>
+          <ul>
+            <li>Landing page de 1 página, até 4 seções</li>
+            <li>Capa, sobre, serviços e contato</li>
+            <li>Botão de WhatsApp integrado</li>
+            <li>Design responsivo (celular e PC)</li>
+            <li>Entrega em até 3 dias</li>
+          </ul>
+          <a href="https://wa.me/5500000000000?text=Quero%20o%20plano%20B%C3%A1sico" class="plan-cta" target="_blank" rel="noopener">Escolher Básico</a>
+        </div>
+
+        <div class="plan featured">
+          <span class="plan-name mono">Padrão</span>
+          <div class="plan-price">R$139<sup>,99</sup></div>
+          <div class="plan-tag">O mais escolhido pelos negócios locais</div>
+          <ul>
+            <li>Tudo do plano Básico</li>
+            <li>Galeria de fotos e portfólio</li>
+            <li>Seção de depoimentos de clientes</li>
+            <li>Formulário de contato próprio</li>
+            <li>Domínio configurado pra você</li>
+            <li>Entrega em até 5 dias</li>
+          </ul>
+          <a href="https://wa.me/5500000000000?text=Quero%20o%20plano%20Padr%C3%A3o" class="plan-cta" target="_blank" rel="noopener">Escolher Padrão</a>
+        </div>
+
+        <div class="plan">
+          <span class="plan-name mono">Completo</span>
+          <div class="plan-price">R$189<sup>,99</sup></div>
+          <div class="plan-tag">Pra quem já recebe agendamentos</div>
+          <ul>
+            <li>Tudo do plano Padrão</li>
+            <li>Sistema de agendamento integrado</li>
+            <li>Botão de pagamento / PIX</li>
+            <li>1 mês de suporte pós-entrega incluso</li>
+            <li>Entrega em até 7 dias</li>
+          </ul>
+          <a href="https://wa.me/5500000000000?text=Quero%20o%20plano%20Completo" class="plan-cta" target="_blank" rel="noopener">Escolher Completo</a>
+        </div>
+      </div>
+
+      <div class="extras">
+        <div class="extra-item">
+          <h4>Domínio próprio</h4>
+          <span>a partir de R$40/ano</span>
+          <p>Repasse do valor real do registro (ex: seunegocio.com.br).</p>
+        </div>
+        <div class="extra-item">
+          <h4>Manutenção mensal</h4>
+          <span>R$29,99/mês</span>
+          <p>Pequenas alterações de texto, foto ou preço sempre que precisar.</p>
+        </div>
+        <div class="extra-item">
+          <h4>Revisão extra</h4>
+          <span>R$19,99 por alteração</span>
+          <p>Ajustes pontuais fora do escopo do plano contratado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL -->
+  <section class="social">
+    <div class="wrap social-grid">
+      <div>
+        <span class="eyebrow">Acompanhe de perto</span>
+        <h2 style="margin-top:14px; font-size: clamp(26px,3.4vw,36px);">Bastidores, dicas e cases no Instagram</h2>
+        <p style="color:var(--silver-dim); margin-top:14px; max-width:440px;">Cada entrega vira conteúdo: antes/depois, dicas de marketing local e os erros mais comuns que afastam clientes de um site. Acompanhe e mande a sua ideia de projeto.</p>
+        <a href="https://instagram.com/synthsolutionshub" class="cta-btn" style="margin-top:26px; display:inline-flex;" target="_blank" rel="noopener">Seguir @synthsolutionshub</a>
+      </div>
+      <div class="ig-card">
+        <div class="ig-head">
+          <svg width="42" height="42" viewBox="0 0 100 100" aria-hidden="true">
+            <path d="M32 22c-10 0-16 6-16 13 0 18 30 10 30 24 0 6-6 10-14 10-8 0-15-4-17-11" fill="none" stroke="url(#markGrad)" stroke-width="8" stroke-linecap="round"/>
+            <path d="M46 22 L66 50 L86 22 M66 50 L66 82" fill="none" stroke="url(#markGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div>
+            <strong>synthsolutionshub</strong>
+            <span>Synth Solutions | Sites que vendem por você</span>
+          </div>
+        </div>
+        <p style="font-size:14px; color:var(--silver-dim);">🎯 Landing pages que convertem visitantes em clientes<br>📅 Sites de agendamento sem dor de cabeça<br>⚡ Entrega rápida, resultado real</p>
+        <div class="ig-stats">
+          <div><strong>2</strong>posts</div>
+          <div><strong>51</strong>seguidores</div>
+          <div><strong>199</strong>seguindo</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="final-cta" id="contato">
+    <div class="wrap">
+      <span class="eyebrow" style="justify-content:center;">Vamos começar</span>
+      <h2 style="margin-top:14px;">Seu site pode estar no ar essa semana.</h2>
+      <p>Manda uma mensagem contando o que seu negócio faz — em poucos dias você tem um link pronto pra enviar aos seus clientes.</p>
+      <a href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Vi%20o%20site%20da%20Synth%20Solutions%20e%20quero%20um%20or%C3%A7amento" class="cta-btn" target="_blank" rel="noopener">Pedir orçamento no WhatsApp</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <svg width="28" height="28" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M32 22c-10 0-16 6-16 13 0 18 30 10 30 24 0 6-6 10-14 10-8 0-15-4-17-11" fill="none" stroke="url(#markGrad)" stroke-width="9" stroke-linecap="round"/>
+        <path d="M46 22 L66 50 L86 22 M66 50 L66 82" fill="none" stroke="url(#markGrad)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Synth Solutions
+    </div>
+    <div class="foot-links">
+      <a href="#problemas">Por que um site</a>
+      <a href="#processo">Como funciona</a>
+      <a href="#planos">Planos</a>
+      <a href="https://instagram.com/synthsolutionshub" target="_blank" rel="noopener">Instagram</a>
+    </div>
+    <div class="foot-links">
+      <span class="mono" style="color:var(--silver-dim);">© 2026 Synth Solutions</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
